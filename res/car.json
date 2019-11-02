@@ -1,0 +1,19 @@
+{
+	"brand" : "HONDA",
+	"model" : "ODYSSEY APEX",
+	"capacity" : 8,
+	"engine" : {
+		"brand" : "HONDA",
+		"model" : "i-VTEC DOHC",
+		"displacement" : 2356.0,
+		"compressionRate" : 10.1,
+		"maxPowerRPM" : [
+			129.0,
+			6200.0
+		],
+		"maxTorqueRPM" : [
+			23.0,
+			4000.0
+		]
+	}
+}

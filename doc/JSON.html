@@ -1,0 +1,1679 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JSON(JavaScript Object Notation)</title>
+
+
+<style type="text/css">
+body {
+	color: #333;
+	font: 13px/1.4 "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+	padding: 0;
+	margin: 0;
+}
+
+a {
+	background: transparent;
+	color: #4183c4;
+	text-decoration: none;
+}
+
+a:active,
+a:hover {
+	outline: 0 none;
+	text-decoration: underline;
+}
+
+abbr[title] {
+	border-bottom: 1px dotted;
+}
+
+b,
+strong {
+	font-weight: bold;
+}
+
+dfn {
+	font-style: italic;
+}
+h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+mark {
+	background: #ff0;
+	color: #000;
+}
+small {
+	font-size: 80%;
+}
+sub, sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sup {
+	top: -0.5em;
+}
+sub {
+	bottom: -0.25em;
+}
+img {
+	border: 0 none;
+}
+svg:not(:root) {
+	overflow: hidden;
+}
+figure {
+	margin: 1em 40px;
+}
+hr {
+	box-sizing: content-box;
+	height: 0;
+}
+
+code,
+kbd,
+pre,
+samp {
+	font-family: monospace,monospace;
+	font-size: 1em;
+}
+
+pre {
+	overflow: auto;
+	font: 12px Consolas,"Liberation Mono",Menlo,Courier,monospace;
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.markdown-body {
+	padding: 30px;
+	font-size: 16px;
+	line-height: 1.6;
+	word-wrap: break-word;
+}
+
+.markdown-body>*:first-child {
+	margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+	margin-bottom: 0 !important;
+}
+
+.markdown-body .absent {
+	color: #c00;
+}
+
+.markdown-body .anchor {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	display: block;
+	padding-right: 6px;
+	padding-left: 30px;
+	margin-left: -30px;
+}
+
+.markdown-body .anchor:focus {
+	outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	position: relative;
+	margin-top: 1em;
+	margin-bottom: 16px;
+	font-weight: bold;
+	line-height: 1.4;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+	display: none;
+	color: #000;
+	vertical-align: middle;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+	padding-left: 8px;
+	margin-left: -30px;
+	line-height: 1;
+	text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+	display: inline-block;
+}
+
+.markdown-body h1 tt,
+.markdown-body h1 code,
+.markdown-body h2 tt,
+.markdown-body h2 code,
+.markdown-body h3 tt,
+.markdown-body h3 code,
+.markdown-body h4 tt,
+.markdown-body h4 code,
+.markdown-body h5 tt,
+.markdown-body h5 code,
+.markdown-body h6 tt,
+.markdown-body h6 code {
+	font-size: inherit;
+}
+
+.markdown-body h1 {
+	padding-bottom: 0.3em;
+	font-size: 2.25em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+	padding-bottom: 0.3em;
+	font-size: 1.75em;
+	line-height: 1.225;
+	border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+	font-size: 1.5em;
+	line-height: 1.43;
+}
+
+.markdown-body h4 {
+	font-size: 1.25em;
+}
+
+.markdown-body h5 {
+	font-size: 1em;
+}
+
+.markdown-body h6 {
+	font-size: 1em;
+	color: #777;
+}
+
+.markdown-body p,.markdown-body blockquote,
+.markdown-body ul,.markdown-body ol,
+.markdown-body dl,.markdown-body table,
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 16px;
+}
+
+.markdown-body hr {
+	height: 4px;
+	padding: 0;
+	margin: 16px 0;
+	background-color: #e7e7e7;
+	border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 2em;
+}
+
+.markdown-body ul.no-list,
+.markdown-body ol.no-list {
+	padding: 0;
+	list-style-type: none;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body li>p {
+	margin-top: 16px;
+}
+
+.markdown-body dl {
+	padding: 0;
+}
+
+.markdown-body dl dt {
+	padding: 0;
+	margin-top: 16px;
+	font-size: 1em;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.markdown-body dl dd {
+	padding: 0 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+	padding: 0 15px;
+	color: #777;
+	border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+	margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+	margin-bottom: 0;
+}
+
+.markdown-body table {
+	display: block;
+	width: 100%;
+	overflow: auto;
+	word-break: normal;
+	word-break: keep-all;
+}
+
+.markdown-body table th {
+	font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+	padding: 6px 13px;
+	border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+	background-color: #fff;
+	border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+	background-color: #f8f8f8;
+}
+
+.markdown-body img {
+	max-width: 100%;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.markdown-body span.frame {
+	display: block;
+	overflow: hidden;
+}
+
+.markdown-body span.frame>span {
+	display: block;
+	float: left;
+	width: auto;
+	padding: 7px;
+	margin: 13px 0 0;
+	overflow: hidden;
+	border: 1px solid #ddd;
+}
+
+.markdown-body span.frame span img {
+	display: block;
+	float: left;
+}
+
+.markdown-body span.frame span span {
+	display: block;
+	padding: 5px 0 0;
+	clear: both;
+	color: #333;
+}
+
+.markdown-body span.align-center {
+	display: block;
+	overflow: hidden;
+	clear: both;
+}
+
+.markdown-body span.align-center>span {
+	display: block;
+	margin: 13px auto 0;
+	overflow: hidden;
+	text-align: center;
+}
+
+.markdown-body span.align-center span img {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.markdown-body span.align-right {
+	display: block;
+	overflow: hidden;
+	clear: both;
+}
+
+.markdown-body span.align-right>span {
+	display: block;
+	margin: 13px 0 0;
+	overflow: hidden;
+	text-align: right;
+}
+
+.markdown-body span.align-right span img {
+	margin: 0;
+	text-align: right;
+}
+
+.markdown-body span.float-left {
+	display: block;
+	float: left;
+	margin-right: 13px;
+	overflow: hidden;
+}
+
+.markdown-body span.float-left span {
+	margin: 13px 0 0;
+}
+
+.markdown-body span.float-right {
+	display: block;
+	float: right;
+	margin-left: 13px;
+	overflow: hidden;
+}
+
+.markdown-body span.float-right>span {
+	display: block;
+	margin: 13px auto 0;
+	overflow: hidden;
+	text-align: right;
+}
+
+.markdown-body code,.markdown-body tt {
+	padding: 0;
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
+	margin: 0;
+	font-size: 85%;
+	background-color: rgba(0,0,0,0.04);
+	border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after,
+.markdown-body tt:before,
+.markdown-body tt:after {
+	letter-spacing: -0.2em;
+	content: "\00a0";
+}
+
+.markdown-body code br,
+.markdown-body tt br {
+	display: none;
+}
+
+.markdown-body del code {
+	text-decoration: inherit;
+}
+
+.markdown-body pre>code {
+	padding: 0;
+	margin: 0;
+	font-size: 100%;
+	word-break: normal;
+	white-space: pre;
+	background: transparent;
+	border: 0;
+}
+
+.markdown-body .highlight {
+	margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+	padding: 16px;
+	overflow: auto;
+	font-size: 85%;
+	line-height: 1.45;
+	background-color: #f7f7f7;
+	border-radius: 3px;
+}
+
+.markdown-body .highlight pre {
+	margin-bottom: 0;
+	word-break: normal;
+}
+
+.markdown-body pre {
+	word-wrap: normal;
+}
+
+.markdown-body pre code,
+.markdown-body pre tt {
+	display: inline;
+	max-width: initial;
+	padding: 0;
+	margin: 0;
+	overflow: initial;
+	line-height: inherit;
+	word-wrap: normal;
+	background-color: transparent;
+	border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after,
+.markdown-body pre tt:before,
+.markdown-body pre tt:after {
+	content: normal;
+}
+
+.highlight .pl-coc,
+.highlight .pl-entl,
+.highlight .pl-entm,
+.highlight .pl-eoa,
+.highlight .pl-mai .pl-sf,
+.highlight .pl-mm,
+.highlight .pl-pdv,
+.highlight .pl-sc,
+.highlight .pl-som,
+.highlight .pl-sr,
+.highlight .pl-v,
+.highlight .pl-vpf {
+	color: #0086b3;
+}
+.highlight .pl-eoac,
+.highlight .pl-mdht,
+.highlight .pl-mi1,
+.highlight .pl-mri,
+.highlight .pl-va,
+.highlight .pl-vpu {
+	color: #008080;
+}
+.highlight .pl-c,
+.highlight .pl-pdc {
+	color: #b4b7b4;
+	font-style: italic;
+}
+.highlight .pl-k,
+.highlight .pl-ko,
+.highlight .pl-kolp,
+.highlight .pl-mc,
+.highlight .pl-mr,
+.highlight .pl-ms,
+.highlight .pl-s,
+.highlight .pl-sok,
+.highlight .pl-st {
+	color: #6e5494;
+}
+.highlight .pl-ef,
+.highlight .pl-enf,
+.highlight .pl-enm,
+.highlight .pl-entc,
+.highlight .pl-eoi,
+.highlight .pl-sf,
+.highlight .pl-smc {
+	color: #d12089;
+}
+.highlight .pl-ens,
+.highlight .pl-eoai,
+.highlight .pl-kos,
+.highlight .pl-mh .pl-pdh,
+.highlight .pl-mp,
+.highlight .pl-pde,
+.highlight .pl-stp {
+	color: #458;
+}
+.highlight .pl-enti {
+	color: #d12089;
+	font-weight: bold;
+}
+.highlight .pl-cce,
+.highlight .pl-enc,
+.highlight .pl-kou,
+.highlight .pl-mq {
+	color: #f93;
+}
+.highlight .pl-mp1 .pl-sf {
+	color: #458;
+	font-weight: bold;
+}
+.highlight .pl-cos,
+.highlight .pl-ent,
+.highlight .pl-md,
+.highlight .pl-mdhf,
+.highlight .pl-ml,
+.highlight .pl-pdc1,
+.highlight .pl-pds,
+.highlight .pl-s1,
+.highlight .pl-scp,
+.highlight .pl-sol {
+	color: #df5000;
+}
+.highlight .pl-c1,
+.highlight .pl-cn,
+.highlight .pl-pse,
+.highlight .pl-pse .pl-s2,
+.highlight .pl-vi {
+	color: #a31515;
+}
+.highlight .pl-mb,
+.highlight .pl-pdb {
+	color: #df5000;
+	font-weight: bold;
+}
+.highlight .pl-mi,
+.highlight .pl-pdi {
+	color: #6e5494;
+	font-style: italic;
+}
+.highlight .pl-ms1 {
+	background-color: #f5f5f5;
+}
+.highlight .pl-mdh,
+.highlight .pl-mdi {
+	font-weight: bold;
+}
+.highlight .pl-mdr {
+	color: #0086b3;
+	font-weight: bold;
+}
+.highlight .pl-s2 {
+	color: #333;
+}
+.highlight .pl-ii {
+	background-color: #df5000;
+	color: #fff;
+}
+.highlight .pl-ib {
+	background-color: #f93;
+}
+.highlight .pl-id {
+	background-color: #a31515;
+	color: #fff;
+}
+.highlight .pl-iu {
+	background-color: #b4b7b4;
+}
+.highlight .pl-mo {
+	color: #969896;
+}
+#user-content-author {
+	font-size:20px;
+	position:absolute;
+	top:20px;
+	right:0;
+}
+#user-content-page-breaker {
+	page-break-after:always;
+}
+
+</style>
+
+
+<script type="text/javascript">
+
+function getDocumentScrollTop() 
+{
+   var res = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset || 0;
+   // alert(res);
+   return res;
+}
+
+function setDocumentScrollTop(ypos) 
+{
+	window.scrollTo(0, ypos);
+}
+
+</script>
+
+
+</head>
+<body class="markdown-body">
+<div style="margin:0 auto;max-width:960px;min-width:600px;text-align:justify;">
+<h1> <a id="jsonjavascript-object-notation" class="anchor" href="#jsonjavascript-object-notation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>JSON(JavaScript Object Notation)
+ <div id="user-content-author">
+  by PGKan
+ </div> </h1> 
+<p>This is a document for introducing JSON format, there will be some information about JSON and a guide for using JSON as a medium of information interchange in Java using Eclipse IDE.</p> 
+<p>The guide includes the introduction and installation of libraries needed in Eclipse for using JSON and a tutorial for using Gson to work with JSON files, basic input/output, and some more advanced object conversions. Some sample codes will be provided.</p> 
+<hr /> 
+<h2> <a id="outline" class="anchor" href="#outline" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Outline</h2> 
+<ul> 
+ <li> <a href="#about-json">About JSON</a> 
+  <ul> 
+   <li><a href="#data-types">Data types</a></li> 
+   <li><a href="#syntax">Syntax</a></li> 
+  </ul> </li> 
+ <li> <a href="#library-gson">Library: Gson</a> 
+  <ul> 
+   <li><a href="#download">Download</a></li> 
+   <li> <a href="#installation">Installation</a> 
+    <ul> 
+     <li><a href="#install-as-maven-project">As Maven project</a></li> 
+     <li><a href="#install-as-jar-files">As Jar files</a></li> 
+    </ul> </li> 
+  </ul> </li> 
+ <li> <a href="#tutorial">Tutorial</a> 
+  <ul> 
+   <li><a href="#test-the-installation">Test the installation</a></li> 
+   <li><a href="#create-a-gson-object">Create a Gson Object</a></li> 
+   <li><a href="#serialize-json-with-tojson">Serialization</a></li> 
+   <li><a href="#deserialize-json-with-fromjson">Deserialization</a></li> 
+   <li><a href="#fields-exclusion">Field Exclusion</a></li> 
+   <li><a href="#version-support">Version Support</a></li> 
+   <li> <a href="#custom-conversion">Custom Conversion</a> 
+    <ul> 
+     <li><a href="#policies-and-strategies">Policies and Strategies</a></li> 
+     <li><a href="#type-adapter">Type Adapter</a></li> 
+    </ul> </li> 
+  </ul> </li> 
+ <li><a href="#alternative-libraries">Alternative Libraries</a></li> 
+ <li><a href="#reference">Reference</a></li> 
+</ul> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul id="user-content-page-breaker" type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h2> <a id="about-json" class="anchor" href="#about-json" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>About JSON</h2> 
+<p>JSON is a lightweight text format that facilitates structured data interchange between all programming languages. It is easy for humans to read and write, also for machines to parse and generate. Although it is a subset of the JavaScript Programming Language, JSON is a text format that is completely language independent. It uses conventions of the C-family of languages, including C, C++, C#, Java, JavaScript, Perl, Python, and many others. These properties make JSON an ideal data-interchange language.</p> 
+<p>JSON is syntax of braces, brackets, colons, and commas that is useful in many contexts, profiles, and applications. Its text is a sequence of Unicode code points. It also depends on Unicode in the hex numbers used in the <code>\u</code> escapement notation. Because JSON is lightweight and dsom simple, it is not expected that the JSON grammar will ever change. This gives JSON, as a foundational notation, tremendous stability.</p> 
+<p>JSON is built on two structures:</p> 
+<ul> 
+ <li>A collection of name/value pairs. In Java, this is realized as an <code>Object</code>, a name/value pair corresponds to a field of an object.</li> 
+ <li>An ordered list of values. In Java, this is realized as an <code>Array</code>.</li> 
+</ul> 
+<p>As most of the modern programming languages support the structures above, the JSON is interchangeable in programming languages that based on these structures.</p> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul id="user-content-page-breaker" type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h3> <a id="data-types" class="anchor" href="#data-types" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Data types</h3> 
+<p>JSON consists of the following data types:</p> 
+<ul> 
+ <li> <code>Number</code>: a signed <em>decimal</em> number that may contain a fractional part and may use exponential E notation, but cannot include non-numbers such as <code>NaN</code>. Just like JavaScript, the format makes no distinction between integer and floating-point.</li> 
+ <li> <code>String</code>: a sequence of zero or more Unicode characters. Strings are delimited with double quotation marks and support a backslash escaping syntax.</li> 
+ <li> <code>Boolean</code>: either of the values <code>true</code> or <code>false</code> </li> 
+ <li> <code>Array</code>: an ordered list of zero or more values, each of which may be of any type. Arrays use square bracket notation with comma-separated elements.</li> 
+ <li> <code>Object</code>: an unordered collection of name-value pairs where the names are strings. Objects are intended to represent associative arrays, where each key is <em>unique</em> within an object. Objects are delimited with <code>{</code> and <code>}</code>, and use <code>,</code> to separate each pair, while within each pair of the <code>:</code> character separates the name from its value.</li> 
+ <li> <code>null</code>: An empty value, using the word <code>null</code> </li> 
+</ul> 
+<blockquote> 
+ <p>JSON is case sensitive with <code>true</code>, <code>false</code> or <code>null</code>.</p> 
+</blockquote> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul id="user-content-page-breaker" type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h3> <a id="syntax" class="anchor" href="#syntax" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Syntax</h3> 
+<details> 
+ <summary>JSON grammar</summary>
+ <hr /> 
+ <p> An <b>object</b> is an unordered set of name/value pairs. An object begins with <code>{</code> and ends with <code>}</code>. Each name is followed by <code>:</code> and the name/value pairs are separated by <code>,</code>. <a href="https://camo.githubusercontent.com/01bbe8e5534bd742636f250b9d3630805709dece/68747470733a2f2f7777772e6a736f6e2e6f72672f696d672f6f626a6563742e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/01bbe8e5534bd742636f250b9d3630805709dece/68747470733a2f2f7777772e6a736f6e2e6f72672f696d672f6f626a6563742e706e67" data-canonical-src="https://www.json.org/img/object.png" style="max-width:100%;" /></a> </p> 
+ <hr /> 
+ <p id="user-content-page-breaker"> An <b>array</b> is an ordered collection of values. An array begins with <code>[</code> and ends with <code>]</code>. Values are separated by <code>,</code>. <a href="https://camo.githubusercontent.com/f5d757d82e1d1677cfcde17125edfd369f468c81/68747470733a2f2f7777772e6a736f6e2e6f72672f696d672f61727261792e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/f5d757d82e1d1677cfcde17125edfd369f468c81/68747470733a2f2f7777772e6a736f6e2e6f72672f696d672f61727261792e706e67" data-canonical-src="https://www.json.org/img/array.png" style="max-width:100%;" /></a> </p> 
+ <hr /> 
+ <p id="user-content-page-breaker"> A <b>value</b> can be a string in double quotes, or a <code>number</code>, or <code>true</code> or <code>false</code> or <code>null</code>, or an <code>object</code> or an <code>array</code>. These structures can be nested. <a href="https://camo.githubusercontent.com/6ef7e87aa0c608b2095f5de39c664969866d745a/68747470733a2f2f7777772e6a736f6e2e6f72672f696d672f76616c75652e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/6ef7e87aa0c608b2095f5de39c664969866d745a/68747470733a2f2f7777772e6a736f6e2e6f72672f696d672f76616c75652e706e67" data-canonical-src="https://www.json.org/img/value.png" style="max-width:100%;" /></a> </p> 
+ <hr /> 
+ <p id="user-content-page-breaker"> A <b>string</b> is a sequence of zero or more Unicode characters, wrapped in double quotes, using backslash escapes. A character is represented as a single character string. A string is very much like a C or Java string. <a href="https://camo.githubusercontent.com/3f5eef846474d0951a7a19fcc5c9b1d32f3ad8fc/68747470733a2f2f7777772e6a736f6e2e6f72672f696d672f737472696e672e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/3f5eef846474d0951a7a19fcc5c9b1d32f3ad8fc/68747470733a2f2f7777772e6a736f6e2e6f72672f696d672f737472696e672e706e67" data-canonical-src="https://www.json.org/img/string.png" style="max-width:100%;" /></a> </p> 
+ <hr /> 
+ <p id="user-content-page-breaker"> A <b>number</b> is very much like a C or Java number, except that the octal and hexadecimal formats are <b>NOT</b> used. <a href="https://camo.githubusercontent.com/5129cac32f7ce2d6f7dfbbe2dee3cdfac1f58f97/68747470733a2f2f7777772e6a736f6e2e6f72672f696d672f6e756d6265722e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/5129cac32f7ce2d6f7dfbbe2dee3cdfac1f58f97/68747470733a2f2f7777772e6a736f6e2e6f72672f696d672f6e756d6265722e706e67" data-canonical-src="https://www.json.org/img/number.png" style="max-width:100%;" /></a> </p> 
+ <hr /> 
+ <p> <b>Whitespace</b> can be inserted between any pair of tokens. Excepting a few encoding details, that completely describes the language. <a href="https://camo.githubusercontent.com/fa0527bef7404c5d26b2b5c5f4aa67a7d6cc5457/68747470733a2f2f7777772e6a736f6e2e6f72672f696d672f776869746573706163652e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/fa0527bef7404c5d26b2b5c5f4aa67a7d6cc5457/68747470733a2f2f7777772e6a736f6e2e6f72672f696d672f776869746573706163652e706e67" data-canonical-src="https://www.json.org/img/whitespace.png" style="max-width:100%;" /></a> </p> 
+</details> 
+<hr /> 
+<details> 
+ <summary>JSON grammar in McKeeman Form</summary> 
+ <pre>
+<code>json
+	element
+value
+	object
+	array
+	string
+	number
+	&quot;true&quot;
+	&quot;false&quot;
+	&quot;null&quot;
+object
+	'{' ws '}'
+	'{' members '}'
+members
+	member
+	member ',' members
+member
+	ws string ws ':' element
+array
+	'[' ws ']'
+	'[' elements ']'
+elements
+	element
+	element ',' elements
+element
+	ws value ws
+string
+	'&quot;' characters '&quot;'
+characters
+	&quot;&quot;
+	character characters
+character
+	'0020' . '10FFFF' '&quot;' '\'
+	'\' escape
+escape
+	'&quot;'
+	'\'
+	'/'
+	'b'
+	'f'
+	'n'
+	'r'
+	't'
+	'u' hex hex hex hex
+hex
+	digit
+	'A' . 'F'
+	'a' . 'f'
+number
+	integer fraction exponent
+integer
+	digit
+	onenine digits
+	'-' digit
+	'-' onenine digits
+digits
+	digit
+	digit digits
+digit
+	'0'
+	onenine
+onenine
+	'1' . '9'
+fraction
+	&quot;&quot;
+	'.' digits
+exponent
+	&quot;&quot;
+	'E' sign digits
+	'e' sign digits
+sign
+	&quot;&quot;
+	'+'
+	'-'
+ws
+	&quot;&quot;
+	'0020' ws
+	'000A' ws
+	'000D' ws
+	'0009' ws</code></pre> 
+</details> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul id="user-content-page-breaker" type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h2> <a id="library-gson" class="anchor" href="#library-gson" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Library: Gson</h2> 
+<p>There is a fast amount of libraries on the internet for JSON in Java. The Gson library released from Google is an open-sourced utility library for serialising an Object in Java to JSON text, and deserialising JSON text to an Object in Java. The Gson library is chosen in this study because it is an open-sourced library, it is a stable and secure library, and there is a large amount of study and tutorial on the internet.</p> 
+<h3> <a id="download" class="anchor" href="#download" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Download</h3> 
+<p>You can download Gson from <a href="https://github.com/google/gson">GitHub</a> directly and build it on the local environment, or download the Gson jar from <a href="https://search.maven.org/artifact/com.google.code.gson/gson/2.8.6/jar" rel="nofollow">Maven Central</a>. If you have downloaded Gson from GitHub, follow the instruction on GitHub to build the Gson. If you want to download Gson from Maven Central, click the <code>Downloads</code> button at the right-hand side of the page and select <code>jar</code> (mandatory). You can also download the <code>javadoc.jar</code> and the <code>sources.jar</code>(not vital for the actions below).</p> 
+<hr /> 
+<h3> <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h3> 
+<h4> <a id="install-as-maven-project" class="anchor" href="#install-as-maven-project" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install as Maven project</h4> 
+<p>If you have downloaded the Gson library from GitHub, you need to import the downloaded sources as Maven project and add project dependency at your project to the Gson project.</p> 
+<details> 
+ <summary>Procedure</summary> 
+ <p>1. Import Gson as a Maven project.</p> 
+ <p><a href="json-md/import1.png" target="_blank" rel="noopener noreferrer"><img src="json-md/import1.png" style="max-width:100%;" /></a></p> 
+ <p><a href="json-md/import2.png" target="_blank" rel="noopener noreferrer"><img src="json-md/import2.png" style="max-width:100%;" /></a></p> 
+ <p><a href="json-md/import3.png" target="_blank" rel="noopener noreferrer"><img src="json-md/import3.png" style="max-width:100%;" /></a></p> 
+ <p>2. Add project dependency to your project build path.</p> 
+ <p><a href="json-md/dependency1.png" target="_blank" rel="noopener noreferrer"><img src="json-md/dependency1.png" style="max-width:100%;" /></a></p> 
+ <p><a href="json-md/dependency2.png" target="_blank" rel="noopener noreferrer"><img src="json-md/dependency2.png" style="max-width:100%;" /></a></p> 
+ <p><a href="json-md/dependency3.png" target="_blank" rel="noopener noreferrer"><img src="json-md/dependency3.png" style="max-width:100%;" /></a></p> 
+</details> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul id="user-content-page-breaker" type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h4> <a id="install-as-jar-files" class="anchor" href="#install-as-jar-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install as Jar files</h4> 
+<p>If you have downloaded the Gson library as Jar files, you need to add the library into your build path reference.</p> 
+<details> 
+ <summary>Procedure</summary> 
+ <p>1. Add Gson library Jar file into your project.</p> 
+ <p id="user-content-page-breaker"><a href="json-md/jar1.png" target="_blank" rel="noopener noreferrer"><img src="json-md/jar1.png" style="max-width:100%;" /></a></p> 
+ <p><a href="json-md/jar2.png" target="_blank" rel="noopener noreferrer"><img src="json-md/jar2.png" style="max-width:100%;" /></a></p> 
+ <p>2. Optional: add javadoc and source Gson library.</p> 
+ <p><a href="json-md/jar3.png" target="_blank" rel="noopener noreferrer"><img src="json-md/jar3.png" style="max-width:100%;" /></a></p> 
+ <p><a href="json-md/jar4.png" target="_blank" rel="noopener noreferrer"><img src="json-md/jar4.png" style="max-width:100%;" /></a></p> 
+ <p><a href="json-md/jar5.png" target="_blank" rel="noopener noreferrer"><img src="json-md/jar5.png" style="max-width:100%;" /></a></p> 
+ <p><a href="json-md/jar6.png" target="_blank" rel="noopener noreferrer"><img src="json-md/jar6.png" style="max-width:100%;" /></a></p> 
+ <p>3. Apply editions.</p> 
+ <p><a href="json-md/jar7.png" target="_blank" rel="noopener noreferrer"><img src="json-md/jar7.png" style="max-width:100%;" /></a></p> 
+</details> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul id="user-content-page-breaker" type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h2> <a id="tutorial" class="anchor" href="#tutorial" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tutorial</h2> 
+<h3> <a id="test-the-installation" class="anchor" href="#test-the-installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Test the installation</h3> 
+<p>If you have downloaded the full repository from GitHub, you should have a source folder called <code>test</code>. Under <code>src/test</code>, there should be two source files <code>EnvironmentTest.java</code> and <code>JsonTestObject.java</code>. Go to <code>EnvironmentTest</code> and run as <strong>Java Application</strong>.</p> 
+<p>If the application output the following string, your installation is correct and complete.</p> 
+<pre><code>Environment Test
+Input test succeeded!
+Output test succeeded!
+JSON test succeeded!
+</code></pre> 
+<p>If you receive an error message: <code>Missing file: &quot;res/json-test.json&quot;</code>, you have not downloaded the full repository, or the path configuration is faulty.</p> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h3> <a id="create-a-gson-object" class="anchor" href="#create-a-gson-object" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create a Gson Object</h3> 
+<p>There are 2 methods to create a Gson Object instance in the Gson library.</p> 
+<ul> 
+ <li><code>new Gson()</code></li> 
+ <li><code>new GsonBuilder().create()</code></li> 
+</ul> 
+<p>The first method is a quick and easy way to instantiate a Gson object with default settings. However, there are a lot of settings you can configure with if the second <code>GsonBuilder</code> method is used to instantiate a Gson object.</p> 
+<p>For example,</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-smi">Gson</span> gson <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">GsonBuilder</span>()
+	.serializeNulls() <span class="pl-c"><span class="pl-c">//</span> tells Gson do not skip null value</span>
+	.setPrettyPrinting() <span class="pl-c"><span class="pl-c">//</span> makes the output JSON text formatted</span>
+	.excludeFieldsWithModifiers(
+		<span class="pl-smi">Modifier</span><span class="pl-c1"><span class="pl-k">.</span>TRANSIENT</span>, <span class="pl-smi">Modifier</span><span class="pl-c1"><span class="pl-k">.</span>STATIC</span>
+	) <span class="pl-c"><span class="pl-c">//</span> exclude some modifiers</span>
+	.create(); <span class="pl-c"><span class="pl-c">//</span> create a Gson instance</span></pre>
+</div> 
+<p>When using <code>GsonBuilder</code> to create a Gson object, you can chain the settings together to create a Gson object with those settings. More about Gson settings in a later chapter.</p> 
+<p>For more details, browse the <a href="https://www.javadoc.io/doc/com.google.code.gson/gson/2.8.6/index.html" rel="nofollow">Gson Javadoc</a> online.</p> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h3> <a id="serialize-json-with-tojson" class="anchor" href="#serialize-json-with-tojson" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Serialize JSON with toJson()</h3> 
+<p>Gson can generate JSON string from Java Objects with the method <code>toJson()</code> of a <code>Gson</code> instance. You can simply give any <code>Object</code> to <code>toJson()</code>, the Json string will be generated.</p> 
+<p>The 3 basic data types in the JSON format, they are <code>String</code>, <code>Number</code> and <code>Boolean</code>, there are the mapping of data type between Gson and JSON.</p> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">Java Type</th> 
+   <th align="left">JSON Type</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left">Character</td> 
+   <td align="left">String</td> 
+  </tr> 
+  <tr> 
+   <td align="left">String</td> 
+   <td align="left">String</td> 
+  </tr> 
+  <tr> 
+   <td align="left">Byte, Short, Integer, Long</td> 
+   <td align="left">Number</td> 
+  </tr> 
+  <tr> 
+   <td align="left">Float, Double</td> 
+   <td align="left">Number</td> 
+  </tr> 
+  <tr> 
+   <td align="left">Boolean</td> 
+   <td align="left">Boolean</td> 
+  </tr> 
+ </tbody> 
+</table> 
+<blockquote> 
+ <p>In Gson library, all Java primitive types will be treated as its wrapper type</p> 
+</blockquote> 
+<hr /> 
+<p>Consider the following Java code:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-smi">String</span> b <span class="pl-k">=</span> gson<span class="pl-k">.</span>toJson(<span class="pl-k">new</span> <span class="pl-smi">Boolean</span>(<span class="pl-c1">true</span>));
+<span class="pl-smi">String</span> i <span class="pl-k">=</span> gson<span class="pl-k">.</span>toJson(<span class="pl-k">new</span> <span class="pl-smi">Integer</span>(<span class="pl-smi">Integer</span><span class="pl-c1"><span class="pl-k">.</span>MAX_VALUE</span>));
+<span class="pl-smi">String</span> d <span class="pl-k">=</span> gson<span class="pl-k">.</span>toJson(<span class="pl-k">new</span> <span class="pl-smi">Double</span>(<span class="pl-smi">Double</span><span class="pl-c1"><span class="pl-k">.</span>MAX_VALUE</span>));
+<span class="pl-smi">String</span> c <span class="pl-k">=</span> gson<span class="pl-k">.</span>toJson(<span class="pl-k">new</span> <span class="pl-smi">Character</span>(<span class="pl-s"><span class="pl-pds">'</span>C<span class="pl-pds">'</span></span>));
+<span class="pl-smi">String</span> s <span class="pl-k">=</span> gson<span class="pl-k">.</span>toJson(<span class="pl-s"><span class="pl-pds">&quot;</span>String<span class="pl-pds">&quot;</span></span>);
+<span class="pl-smi">String</span> n <span class="pl-k">=</span> gson<span class="pl-k">.</span>toJson(<span class="pl-c1">null</span>);</pre>
+</div> 
+<p>Their value after serialized into JSON by Gson:</p> 
+<pre><code>true                    // the data type is Boolean
+2147483647              // the data type is Number
+1.7976931348623157E308  // the data type is Number
+&quot;C&quot;                     // the data type is Stirng
+&quot;String&quot;                // the data type is Stirng
+null
+</code></pre> 
+<hr /> 
+<p>The 2 structured data types in the JSON format, <code>Object</code> and <code>List</code>. Gson treats all Java <code>Object</code> as <code>Object</code> in JSON, excepted for the implementations of <code>Collection</code>. The type of <code>Array</code> and implementations of <code>Collection</code> are treated as JSON <code>List</code> in Gson.</p> 
+<p>Consider the following Java code:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">List&lt;<span class="pl-smi">String</span>&gt;</span> list <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">ArrayList&lt;&gt;</span>();
+
+<span class="pl-k">Set&lt;<span class="pl-smi">String</span>&gt;</span> set <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">HashSet&lt;&gt;</span>();
+set<span class="pl-k">.</span>add(<span class="pl-s"><span class="pl-pds">&quot;</span>set item 0<span class="pl-pds">&quot;</span></span>);
+set<span class="pl-k">.</span>add(<span class="pl-s"><span class="pl-pds">&quot;</span>set item 1<span class="pl-pds">&quot;</span></span>);
+set<span class="pl-k">.</span>add(<span class="pl-s"><span class="pl-pds">&quot;</span>set item 2<span class="pl-pds">&quot;</span></span>);
+
+<span class="pl-smi">String</span> strings[] <span class="pl-k">=</span> {<span class="pl-s"><span class="pl-pds">&quot;</span>string 0<span class="pl-pds">&quot;</span></span>, <span class="pl-s"><span class="pl-pds">&quot;</span>string 1<span class="pl-pds">&quot;</span></span>, <span class="pl-s"><span class="pl-pds">&quot;</span>string 2<span class="pl-pds">&quot;</span></span>};
+
+<span class="pl-k">Map&lt;<span class="pl-smi">Integer</span>, <span class="pl-smi">String</span>&gt;</span> map <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">HashMap&lt;&gt;</span>();
+map<span class="pl-k">.</span>put(<span class="pl-c1">0</span>, <span class="pl-s"><span class="pl-pds">&quot;</span>map item 0<span class="pl-pds">&quot;</span></span>);
+map<span class="pl-k">.</span>put(<span class="pl-c1">1</span>, <span class="pl-s"><span class="pl-pds">&quot;</span>map item 1<span class="pl-pds">&quot;</span></span>);
+map<span class="pl-k">.</span>put(<span class="pl-c1">2</span>, <span class="pl-s"><span class="pl-pds">&quot;</span>map item 2<span class="pl-pds">&quot;</span></span>);</pre>
+</div> 
+<p>Their value after serialized into JSON by Gson:</p> 
+<pre><code>// an empty list
+[]
+
+// the order of a set is determined by the hash value of the item
+[&quot;set item 0&quot;,&quot;set item 2&quot;,&quot;set item 1&quot;]
+
+// array or any ordered list structure keep their order
+[&quot;string 0&quot;,&quot;string 1&quot;,&quot;string 2&quot;]
+
+// maps are treated as an object/map in JSON and the order of its
+// items are determined by the hash value of the key
+{&quot;0&quot;:&quot;map item 0&quot;,&quot;1&quot;:&quot;map item 1&quot;,&quot;2&quot;:&quot;map item 2&quot;}
+</code></pre> 
+<p>Consider the following Java code:</p> 
+<p>Definition of <code>Car</code> and <code>Engine</code>:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Car</span> {
+	<span class="pl-k">public</span> <span class="pl-en">Car</span>() {
+		<span class="pl-c1">this</span><span class="pl-k">.</span>brand <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&quot;</span>TOYOTA<span class="pl-pds">&quot;</span></span>;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>model <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&quot;</span>PRIUS α<span class="pl-pds">&quot;</span></span>;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>capacity <span class="pl-k">=</span> <span class="pl-c1">7</span>;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>engine <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Engine</span>();
+	}
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> brand    <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&quot;</span>TOYOTA<span class="pl-pds">&quot;</span></span>;
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> model    <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&quot;</span>PRIUS α<span class="pl-pds">&quot;</span></span>;
+	<span class="pl-k">private</span> <span class="pl-k">int</span>    capacity <span class="pl-k">=</span> <span class="pl-c1">7</span>;
+	<span class="pl-k">private</span> <span class="pl-smi">Engine</span> engine   <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Engine</span>();
+}</pre>
+</div> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Engine</span> {
+
+	<span class="pl-k">public</span> <span class="pl-en">Engine</span>() {
+		<span class="pl-c1">this</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>TOYOTA<span class="pl-pds">&quot;</span></span>, <span class="pl-s"><span class="pl-pds">&quot;</span>2ZR-FXE<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">1798</span>, <span class="pl-c1">13</span>, <span class="pl-k">new</span> <span class="pl-smi">double</span>[<span class="pl-c1">2</span>], <span class="pl-k">new</span> <span class="pl-smi">double</span>[<span class="pl-c1">2</span>]);
+		<span class="pl-c1">this</span><span class="pl-k">.</span>maxPowerRPM[<span class="pl-c1">0</span>] <span class="pl-k">=</span> <span class="pl-c1">99</span>;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>maxPowerRPM[<span class="pl-c1">1</span>] <span class="pl-k">=</span> <span class="pl-c1">5200</span>;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>maxPowerRPM[<span class="pl-c1">0</span>] <span class="pl-k">=</span> <span class="pl-c1">14.5</span>;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>maxPowerRPM[<span class="pl-c1">1</span>] <span class="pl-k">=</span> <span class="pl-c1">4000</span>;
+	}
+
+	<span class="pl-k">public</span> <span class="pl-en">Engine</span>(<span class="pl-smi">String</span> <span class="pl-v">brand</span>, <span class="pl-smi">String</span> <span class="pl-v">model</span>, <span class="pl-k">double</span> <span class="pl-v">displacement</span>,
+		<span class="pl-k">double</span> <span class="pl-v">compressionRate</span>, <span class="pl-k">double</span>[] <span class="pl-v">maxPowerRPM</span>, <span class="pl-k">double</span>[] <span class="pl-v">maxTorqueRPM</span>) {
+		<span class="pl-c1">this</span><span class="pl-k">.</span>brand <span class="pl-k">=</span> brand;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>model <span class="pl-k">=</span> model;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>displacement <span class="pl-k">=</span> displacement;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>compressionRate <span class="pl-k">=</span> compressionRate;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>maxPowerRPM <span class="pl-k">=</span> maxPowerRPM<span class="pl-k">.</span>clone();
+		<span class="pl-c1">this</span><span class="pl-k">.</span>maxTorqueRPM <span class="pl-k">=</span> maxTorqueRPM<span class="pl-k">.</span>clone();
+	}
+
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> brand;
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> model;
+	<span class="pl-k">private</span> <span class="pl-k">double</span> displacement;
+	<span class="pl-k">private</span> <span class="pl-k">double</span> compressionRate;
+	<span class="pl-k">private</span> <span class="pl-k">double</span> maxPowerRPM[];
+	<span class="pl-k">private</span> <span class="pl-k">double</span> maxTorqueRPM[];
+}</pre>
+</div> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-smi">String</span> car <span class="pl-k">=</span> gson<span class="pl-k">.</span>toJson(<span class="pl-k">new</span> <span class="pl-smi">Car</span>());</pre>
+</div> 
+<p>The serialized JSON text will look like this:</p> 
+<div class="highlight highlight-source-json">
+ <pre>{
+  <span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>TOYOTA<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>PRIUS α<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>capacity<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">7</span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>engine<span class="pl-pds">&quot;</span></span>: {
+    <span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>TOYOTA<span class="pl-pds">&quot;</span></span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>2ZR-FXE<span class="pl-pds">&quot;</span></span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>displacement<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">1798.0</span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>compressionRate<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">13.0</span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>maxPowerRPM<span class="pl-pds">&quot;</span></span>: [
+      <span class="pl-c1">99.0</span>,
+      <span class="pl-c1">5200.0</span>
+    ],
+    <span class="pl-s"><span class="pl-pds">&quot;</span>maxTorqueRPM<span class="pl-pds">&quot;</span></span>: [
+      <span class="pl-c1">14.5</span>,
+      <span class="pl-c1">4000.0</span>
+    ]
+  }
+}</pre>
+</div> 
+<p><code>Engine</code> itself is a separate class in Java. Therefore after the object <code>Car</code> serialized into JSON text, the value of object property <code>engine</code> contains a JSON object with the properties of an <code>Engine</code>.</p> 
+<blockquote> 
+ <p>The text output by Gson will not be formatted unless the Gson instance you use is configured by <code>setPrettyPrinting</code>.</p> 
+</blockquote> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h3> <a id="deserialize-json-with-fromjson" class="anchor" href="#deserialize-json-with-fromjson" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Deserialize JSON with fromJson()</h3> 
+<p>Gson can deserialize a JSON string to a Java Object with the method <code>fromJson()</code> of a <code>Gson</code> instance. This method requires 2 arguments, the JSON string and the Javatype of the targeted class.</p> 
+<p>Consider the following codes:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-c"><span class="pl-c">//</span> the definition of class Car is the same as above</span>
+<span class="pl-smi">Car</span> myCar <span class="pl-k">=</span> gson<span class="pl-k">.</span>fromJson(<span class="pl-k">new</span> <span class="pl-smi">FileReader</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>res/car.json<span class="pl-pds">&quot;</span></span>), <span class="pl-smi">Car</span><span class="pl-k">.</span>class);
+<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(myCar<span class="pl-k">.</span>toString());
+<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-k">new</span> <span class="pl-smi">Car</span>());</pre>
+</div> 
+<p>Content of car.json:</p> 
+<div class="highlight highlight-source-json">
+ <pre>{
+	<span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span> : <span class="pl-s"><span class="pl-pds">&quot;</span>HONDA<span class="pl-pds">&quot;</span></span>,
+	<span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span> : <span class="pl-s"><span class="pl-pds">&quot;</span>ODYSSEY APEX<span class="pl-pds">&quot;</span></span>,
+	<span class="pl-s"><span class="pl-pds">&quot;</span>capacity<span class="pl-pds">&quot;</span></span> : <span class="pl-c1">8</span>,
+	<span class="pl-s"><span class="pl-pds">&quot;</span>engine<span class="pl-pds">&quot;</span></span> : {
+		<span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span> : <span class="pl-s"><span class="pl-pds">&quot;</span>HONDA<span class="pl-pds">&quot;</span></span>,
+		<span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span> : <span class="pl-s"><span class="pl-pds">&quot;</span>i-VTEC DOHC<span class="pl-pds">&quot;</span></span>,
+		<span class="pl-s"><span class="pl-pds">&quot;</span>displacement<span class="pl-pds">&quot;</span></span> : <span class="pl-c1">2356.0</span>,
+		<span class="pl-s"><span class="pl-pds">&quot;</span>compressionRate<span class="pl-pds">&quot;</span></span> : <span class="pl-c1">10.1</span>,
+		<span class="pl-s"><span class="pl-pds">&quot;</span>maxPowerRPM<span class="pl-pds">&quot;</span></span> : [
+			<span class="pl-c1">129.0</span>,
+			<span class="pl-c1">6200.0</span>
+		],
+		<span class="pl-s"><span class="pl-pds">&quot;</span>maxTorqueRPM<span class="pl-pds">&quot;</span></span> : [
+			<span class="pl-c1">23.0</span>,
+			<span class="pl-c1">4000.0</span>
+		]
+	}
+}</pre>
+</div> 
+<p>The output data:</p> 
+<pre><code>Car [brand=TOYOTA, model=PRIUS α, capacity=7, engine=Engine [brand=TOYOTA,
+	model=2ZR-FXE, displacement=1798.0, compressionRate=13.0,
+	maxPowerRPM=[99.0, 5200.0], maxTorqueRPM=[14.5, 4000.0]]]
+Car [brand=HONDA, model=ODYSSEY APEX, capacity=8, engine=Engine [brand=HONDA,
+	model=i-VTEC DOHC, displacement=2356.0, compressionRate=10.1,
+	maxPowerRPM=[129.0, 6200.0], maxTorqueRPM=[23.0, 4000.0]]]
+</code></pre> 
+<p>In the output object <code>myCar</code>, the properties loaded from <code>car.json</code> will replace the default properties of the class <code>Car</code>.</p> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h3> <a id="fields-exclusion" class="anchor" href="#fields-exclusion" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fields Exclusion</h3> 
+<p>Some fields of an object may use in Java program exclusively, and you don't want to serialse those fields. There are some methods to exclude specific field from JSON string generation.</p> 
+<ol> 
+ <li>By default any field with the value <code>null</code> will be excluded. If you want Gson serialize <code>null</code> values, add <code>serializeNulls()</code> to your <code>GsonBuilder</code>.</li> 
+</ol> 
+<hr /> 
+<ol start="2"> 
+ <li>The <code>static</code> or<code>transient</code> modifier. Just likes using <code>Serializable</code>, <code>transient</code> fields will not be writen into <code>OutputStream</code> by <code>writeObject</code>.</li> 
+</ol> 
+<blockquote> 
+ <p>If <code>excludeFieldsWithModifiers()</code> is used to configure the Gson instance, the default exclusion of modifier <code>static</code> and <code>transient</code> will be overriden.</p> 
+</blockquote> 
+<hr /> 
+<ol start="3"> 
+ <li>The <code>@Expose</code> annotation. The Gson library provides an annotation <code>com.google.gson.annotations.@Expose</code> to set the field is or is not (de)serializable. The annotation <code>@Expose</code> takes 2 arguments to specify the (de)serializability of a field. By default <code>@Expose</code> makes a field both serializable and deserializable by Gson. Give parameter <code>serialize</code> or <code>deserialize</code> to the annotation to specifically set a field cannot be serialized or deserialized.</li> 
+</ol> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Expose</span>(<span class="pl-c1">serialize</span> <span class="pl-k">=</span> <span class="pl-c1">false</span>) <span class="pl-c"><span class="pl-c">//</span> the field will not serialize by Gson</span>
+<span class="pl-k">@Expose</span>(<span class="pl-c1">deserialize</span> <span class="pl-k">=</span> <span class="pl-c1">false</span>) <span class="pl-c"><span class="pl-c">//</span> the field will not deserialize by Gson</span>
+<span class="pl-k">@Expose</span>(<span class="pl-c1">serialize</span> <span class="pl-k">=</span> <span class="pl-c1">false</span>, <span class="pl-c1">deserialize</span> <span class="pl-k">=</span> <span class="pl-c1">false</span>) <span class="pl-c"><span class="pl-c">//</span> the field will not serialize</span>
+                                                <span class="pl-c"><span class="pl-c">//</span> and deserialize by Gson</span></pre>
+</div> 
+<hr /> 
+<ol start="4"> 
+ <li>The <code>ExclusionStrategy</code> interface. The Gson library provides an interface <code>com.google.gson.ExclusionStrategy</code> to set on a <code>GsonBuilder</code>. A <code>Gson</code> instance with <code>ExclusionStrategy</code> will check a field shoud or should not (de)serialize by the <code>shouldSkipField()</code> and <code>shouldSkipClass()</code> methods implement from the <code>ExclusionStrategy</code> interface.</li> 
+</ol> 
+<p>An example of using ExclusionStrategy:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">ExcludeEngineStrategy</span> <span class="pl-k">implements</span> <span class="pl-e">ExclusionStrategy</span> {
+	<span class="pl-k">@Override</span>
+	<span class="pl-k">public</span> <span class="pl-k">boolean</span> <span class="pl-en">shouldSkipField</span>(<span class="pl-smi">FieldAttributes</span> <span class="pl-v">f</span>) {
+		<span class="pl-k">return</span> f<span class="pl-k">.</span>getName()<span class="pl-k">.</span>equals(<span class="pl-s"><span class="pl-pds">&quot;</span>engine<span class="pl-pds">&quot;</span></span>)
+			<span class="pl-k">||</span> f<span class="pl-k">.</span>hasModifier(<span class="pl-smi">Modifier</span><span class="pl-c1"><span class="pl-k">.</span>STATIC</span>);
+	}
+	<span class="pl-k">@Override</span>
+	<span class="pl-k">public</span> <span class="pl-k">boolean</span> <span class="pl-en">shouldSkipClass</span>(<span class="pl-k">Class&lt;?&gt;</span> <span class="pl-v">clazz</span>) {
+		<span class="pl-k">return</span> <span class="pl-c1">false</span>;
+	}
+}</pre>
+</div> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-smi">Gson</span> gson <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">GsonBuilder</span>()
+	.excludeFieldsWithModifiers(<span class="pl-smi">Modifier</span><span class="pl-c1"><span class="pl-k">.</span>TRANSIENT</span>)
+	.setExclusionStrategies(<span class="pl-k">new</span> <span class="pl-smi">ExcludeEngineStrategy</span>())
+	.setPrettyPrinting()
+	.create();
+	<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(gson<span class="pl-k">.</span>toJson(<span class="pl-k">new</span> <span class="pl-smi">Car</span>()));</pre>
+</div> 
+<p>The <code>ExcludeEngineStrategy</code> above will cause the <code>Gson</code> instance skip field named as &quot;engine&quot; and all <code>static</code> fields.</p> 
+<p>The output will looks like this:</p> 
+<div class="highlight highlight-source-json">
+ <pre>{
+  <span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>TOYOTA<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>PRIUS α<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>capacity<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">7</span>
+}</pre>
+</div> 
+<p>There is no output data for the field engine.</p> 
+<hr /> 
+<p>There is another <code>Gson</code> instance with difference configuration:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-smi">Gson</span> gson <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">GsonBuilder</span>()
+	.excludeFieldsWithModifiers(<span class="pl-smi">Modifier</span><span class="pl-c1"><span class="pl-k">.</span>TRANSIENT</span>)
+	.setPrettyPrinting()
+	.create();</pre>
+</div> 
+<p>If this <code>Gson</code> instance is used instead, the output will looks like this:</p> 
+<div class="highlight highlight-source-json">
+ <pre>{
+  <span class="pl-s"><span class="pl-pds">&quot;</span>MODEL_CAR<span class="pl-pds">&quot;</span></span>: {
+    <span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>Mercedes-Benz<span class="pl-pds">&quot;</span></span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>GLS 350d<span class="pl-pds">&quot;</span></span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>capacity<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">7</span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>engine<span class="pl-pds">&quot;</span></span>: {
+      <span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>Mercedes-Benz<span class="pl-pds">&quot;</span></span>,
+      <span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>4MATIC G-TRONIC<span class="pl-pds">&quot;</span></span>,
+      <span class="pl-s"><span class="pl-pds">&quot;</span>displacement<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">2987.0</span>,
+      <span class="pl-s"><span class="pl-pds">&quot;</span>compressionRate<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">15.5</span>,
+      <span class="pl-s"><span class="pl-pds">&quot;</span>maxPowerRPM<span class="pl-pds">&quot;</span></span>: [
+        <span class="pl-c1">192.4</span>,
+        <span class="pl-c1">3400.0</span>
+      ],
+      <span class="pl-s"><span class="pl-pds">&quot;</span>maxTorqueRPM<span class="pl-pds">&quot;</span></span>: [
+        <span class="pl-c1">63.2</span>,
+        <span class="pl-c1">2400.0</span>
+      ]
+    }
+  },
+  <span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>TOYOTA<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>PRIUS α<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>capacity<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">7</span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>engine<span class="pl-pds">&quot;</span></span>: {
+    <span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>TOYOTA<span class="pl-pds">&quot;</span></span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>2ZR-FXE<span class="pl-pds">&quot;</span></span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>displacement<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">1798.0</span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>compressionRate<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">13.0</span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>maxPowerRPM<span class="pl-pds">&quot;</span></span>: [
+      <span class="pl-c1">99.0</span>,
+      <span class="pl-c1">5200.0</span>
+    ],
+    <span class="pl-s"><span class="pl-pds">&quot;</span>maxTorqueRPM<span class="pl-pds">&quot;</span></span>: [
+      <span class="pl-c1">14.5</span>,
+      <span class="pl-c1">4000.0</span>
+    ]
+  }
+}</pre>
+</div> 
+<p>Because <code>excludeFieldsWithModifiers()</code> did not define <code>Modifier.STATIC</code>, the static field <code>MODEL_CAR</code> is output to the JSON string; engine is output to the JSON string.</p> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h3> <a id="version-support" class="anchor" href="#version-support" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Version Support</h3> 
+<p>The Gson library contains version support functionality. It can base on the version number on properties to decide whether or not the properties will be excluded. The method to enable using version support is annotating the properties with the annotation <code>com.google.gson.annotations.@Since</code> and using <code>setVersion()</code> in your <code>GsonBuilder</code>.</p> 
+<p>Consider the follow codes:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Car</span> {
+
+	<span class="pl-k">public</span> <span class="pl-en">Car</span>() {
+		<span class="pl-c1">this</span><span class="pl-k">.</span>brand <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&quot;</span>TOYOTA<span class="pl-pds">&quot;</span></span>;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>model <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&quot;</span>PRIUS α<span class="pl-pds">&quot;</span></span>;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>capacity <span class="pl-k">=</span> <span class="pl-c1">7</span>;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>engine <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Engine</span>();
+	}
+
+	<span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-smi">Car</span> <span class="pl-c1">MODEL_CAR</span> <span class="pl-k">=</span> <span class="pl-smi">Car</span><span class="pl-k">.</span>createModelCar();
+
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> brand;
+	<span class="pl-k">@Since</span>(<span class="pl-c1">1.0</span>)
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> model;
+	<span class="pl-k">@Since</span>(<span class="pl-c1">2.0</span>)
+	<span class="pl-k">private</span> <span class="pl-k">int</span> capacity;
+	<span class="pl-k">@Since</span>(<span class="pl-c1">3.0</span>)
+	<span class="pl-k">private</span> <span class="pl-smi">Engine</span> engine;</pre>
+</div> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> noVersion() {
+		<span class="pl-smi">Gson</span> gson <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">GsonBuilder</span>()
+			.setPrettyPrinting()
+			.create();
+		<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(gson<span class="pl-k">.</span>toJson(<span class="pl-k">new</span> <span class="pl-smi">Car</span>()));
+}
+
+<span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> version1() {
+	<span class="pl-smi">Gson</span> gson <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">GsonBuilder</span>()
+		.setVersion(<span class="pl-c1">1.0</span>)
+		.setPrettyPrinting()
+		.create();
+	<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(gson<span class="pl-k">.</span>toJson(<span class="pl-k">new</span> <span class="pl-smi">Car</span>()));
+}
+
+<span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">void</span> version3() {
+	<span class="pl-smi">Gson</span> gson <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">GsonBuilder</span>()
+		.setVersion(<span class="pl-c1">3.0</span>)
+		.setPrettyPrinting()
+		.create();
+	<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(gson<span class="pl-k">.</span>toJson(<span class="pl-k">new</span> <span class="pl-smi">Car</span>()));
+}</pre>
+</div> 
+<hr /> 
+<p>If <code>version1()</code> is being called, its output the follwing:</p> 
+<div class="highlight highlight-source-json">
+ <pre>{
+  <span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>TOYOTA<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>PRIUS α<span class="pl-pds">&quot;</span></span>
+}</pre>
+</div> 
+<p>The fields annotated as version greater than 1.0 are excluded.</p> 
+<p>If <code>version3()</code> is being called, its output the follwing:</p> 
+<div class="highlight highlight-source-json">
+ <pre>{
+  <span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>TOYOTA<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>PRIUS α<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>capacity<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">7</span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>engine<span class="pl-pds">&quot;</span></span>: {
+    <span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>TOYOTA<span class="pl-pds">&quot;</span></span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>2ZR-FXE<span class="pl-pds">&quot;</span></span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>displacement<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">1798.0</span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>compressionRate<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">13.0</span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>maxPowerRPM<span class="pl-pds">&quot;</span></span>: [
+      <span class="pl-c1">99.0</span>,
+      <span class="pl-c1">5200.0</span>
+    ],
+    <span class="pl-s"><span class="pl-pds">&quot;</span>maxTorqueRPM<span class="pl-pds">&quot;</span></span>: [
+      <span class="pl-c1">14.5</span>,
+      <span class="pl-c1">4000.0</span>
+    ]
+  }
+}</pre>
+</div> 
+<p>The fields annotated as version 3.0 or below are included. The fields belong to <code>Engine</code> are not annotated with <code>@Since</code> annotation therefore they are all included.</p> 
+<p>If <code>noVersion()</code> is being called, its output the follwing:</p> 
+<div class="highlight highlight-source-json">
+ <pre>{
+  <span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>TOYOTA<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>PRIUS α<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>capacity<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">7</span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>engine<span class="pl-pds">&quot;</span></span>: {
+    <span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>TOYOTA<span class="pl-pds">&quot;</span></span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>2ZR-FXE<span class="pl-pds">&quot;</span></span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>displacement<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">1798.0</span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>compressionRate<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">13.0</span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>maxPowerRPM<span class="pl-pds">&quot;</span></span>: [
+      <span class="pl-c1">99.0</span>,
+      <span class="pl-c1">5200.0</span>
+    ],
+    <span class="pl-s"><span class="pl-pds">&quot;</span>maxTorqueRPM<span class="pl-pds">&quot;</span></span>: [
+      <span class="pl-c1">14.5</span>,
+      <span class="pl-c1">4000.0</span>
+    ]
+  }
+}</pre>
+</div> 
+<p>The <code>Gson</code> serialize all of the fields. Even if the fields are annotated with <code>@Since</code> annotation, without using <code>setVersion()</code> in the <code>GsonBuilder</code> will not enable the version support exclusion functionality.</p> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h3> <a id="custom-conversion" class="anchor" href="#custom-conversion" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Custom Conversion</h3> 
+<p>The Gson library provides some customizations to paring and generating JSON strings for converting between Java type and custom JSON stirng.</p> 
+<h4> <a id="policies-and-strategies" class="anchor" href="#policies-and-strategies" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Policies and Strategies</h4> 
+<p>The Gson library provides two types of configuration to customize the (de)serialize process, they are policies and strategies. Policies are a bunch of pre-defined attributes tell how should the <code>Gson</code> works to (de)serialize an <code>Object</code>. And Strategies are interfaces that you need to implement before using it the customize the (de)serialization.</p> 
+<h5> <a id="using-policies-to-configure-gson" class="anchor" href="#using-policies-to-configure-gson" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using Policies to Configure Gson</h5> 
+<p>There are 2 types of policy in Gson library, they are <code>FieldNamingPolicy</code> and <code>LongSerializationPolicy</code>.</p> 
+<p>The <code>FieldNamingPolicy</code> is used to configure how the <code>Gson</code> convert the name of fields to the keys(names) in a JSON <code>Object</code>. The policies can choose from the <code>FieldNamingPolicy</code> are listed below:</p> 
+<table> 
+ <thead> 
+  <tr> 
+   <th align="left">Policy</th> 
+   <th align="left">Field Name</th> 
+   <th align="left">Key Name</th> 
+  </tr> 
+ </thead> 
+ <tbody> 
+  <tr> 
+   <td align="left">IDENTITY</td> 
+   <td align="left">simpleFieldName</td> 
+   <td align="left">simpleFieldName</td> 
+  </tr> 
+  <tr> 
+   <td align="left">LOWER_CASE_WITH_DASHES</td> 
+   <td align="left">simpleFieldName</td> 
+   <td align="left">simple-field-name</td> 
+  </tr> 
+  <tr> 
+   <td align="left">LOWER_CASE_WITH_DOTS</td> 
+   <td align="left">simpleFieldName</td> 
+   <td align="left">simple.field.name</td> 
+  </tr> 
+  <tr> 
+   <td align="left">LOWER_CASE_WITH_UNDERSCORES</td> 
+   <td align="left">simpleFieldName</td> 
+   <td align="left">simple_field_name</td> 
+  </tr> 
+  <tr> 
+   <td align="left">UPPER_CAMEL_CASE</td> 
+   <td align="left">simpleFieldName</td> 
+   <td align="left">SimpleFieldName</td> 
+  </tr> 
+  <tr> 
+   <td align="left">UPPER_CAMEL_CASE_WITH_SPACES</td> 
+   <td align="left">simpleFieldName</td> 
+   <td align="left">Simple Field Name</td> 
+  </tr> 
+ </tbody> 
+</table> 
+<p>The <code>LongSerializationPolicy</code> is used to configure how the <code>Gson</code> convert <code>Long</code> into JSON string. There is two policies in <code>LongSerializationPolicy</code>, <code>DEFAULT</code> and <code>STRING</code>. Under <code>DEFAULT</code> policy, the <code>Gson</code> will serialize Java <code>Long</code> into Json <code>Number</code> as chapter 3.3 &quot;<a href="#serialize-json-with-tojson">Serialization</a>&quot; stated. Under <code>STRING</code> policy, the <code>Gson</code> will serialize Java <code>Long</code> into Json <code>String</code>.</p> 
+<p>Consider the following codes:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-smi">Gson</span> gson <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">GsonBuilder</span>()
+	.setPrettyPrinting()
+	.setFieldNamingPolicy(<span class="pl-smi">FieldNamingPolicy</span><span class="pl-c1"><span class="pl-k">.</span>LOWER_CASE_WITH_DASHES</span>)
+	.create();
+<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(gson<span class="pl-k">.</span>toJson(<span class="pl-smi">Engine</span><span class="pl-k">.</span>createModelEngine()));</pre>
+</div> 
+<p>The output will look like this:</p> 
+<div class="highlight highlight-source-json">
+ <pre>{
+  <span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>Mercedes-Benz<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>4MATIC G-TRONIC<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>displacement<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">2987.0</span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>compression-rate<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">15.5</span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>max-power-r-p-m<span class="pl-pds">&quot;</span></span>: [
+    <span class="pl-c1">192.4</span>,
+    <span class="pl-c1">3400.0</span>
+  ],
+  <span class="pl-s"><span class="pl-pds">&quot;</span>max-torque-r-p-m<span class="pl-pds">&quot;</span></span>: [
+    <span class="pl-c1">63.2</span>,
+    <span class="pl-c1">2400.0</span>
+  ]
+}</pre>
+</div> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h5> <a id="using-strategies-to-configure-gson" class="anchor" href="#using-strategies-to-configure-gson" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using Strategies to Configure Gson</h5> 
+<p>There are 2 types of strategies in Gson library, they are <code>ExclusionStrategy</code> and <code>FieldNamingStrategy</code>.</p> 
+<p>The <code>ExclusionStrategy</code> is already stated in chapter 3.5 &quot;<a href="#fields-exclusion">Field Exclusion</a>&quot;, and the <code>FieldNamingStrategy</code> is used to convert the name of fields into the key in JSON string, the translation between Java fields name and JSON keys name needs to be implemented by the user.</p> 
+<p>This is an example of using <code>FieldNamingStrategy</code>:</p> 
+<p>The <code>JavaFieldNamingPolicy.LOWER_CASE_WITH_DASHES</code> translates the name &quot;RPM&quot; into &quot;r-p-m&quot;, this may not be what you are looking for. You can implement a <code>FieldNamingStrategy</code> to translate the name instead.</p> 
+<p>Implementation of <code>ShortenedNameLowerCaseDashesStrategy</code>:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">ShortenedNameLowerCaseDashesStrategy</span> <span class="pl-k">implements</span> <span class="pl-e">FieldNamingStrategy</span> {
+
+	<span class="pl-k">@Override</span>
+	<span class="pl-k">public</span> <span class="pl-smi">String</span> <span class="pl-en">translateName</span>(<span class="pl-smi">Field</span> <span class="pl-v">f</span>) {
+		<span class="pl-k">char</span> originalChars[] <span class="pl-k">=</span> f<span class="pl-k">.</span>getName()<span class="pl-k">.</span>toCharArray();
+		<span class="pl-smi">String</span> newName <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&quot;</span><span class="pl-pds">&quot;</span></span>;
+		<span class="pl-k">boolean</span> previousCapital <span class="pl-k">=</span> <span class="pl-c1">false</span>;
+		<span class="pl-k">for</span> (<span class="pl-k">char</span> originalChar <span class="pl-k">:</span> originalChars) {
+			<span class="pl-k">boolean</span> currentCapital <span class="pl-k">=</span> originalChar <span class="pl-k">&gt;</span> <span class="pl-c1">0x40</span>
+				<span class="pl-k">&amp;&amp;</span> originalChar <span class="pl-k">&lt;</span> <span class="pl-c1">0x5B</span>;
+			newName <span class="pl-k">+=</span> <span class="pl-k">!</span>previousCapital <span class="pl-k">&amp;&amp;</span> currentCapital <span class="pl-k">?</span> <span class="pl-s"><span class="pl-pds">&quot;</span>-<span class="pl-pds">&quot;</span></span> <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">&quot;</span><span class="pl-pds">&quot;</span></span>;
+			newName <span class="pl-k">+=</span> (<span class="pl-k">char</span>) (currentCapital <span class="pl-k">?</span> originalChar <span class="pl-k">+</span> <span class="pl-c1">0x20</span>
+				<span class="pl-k">:</span> originalChar);
+			previousCapital <span class="pl-k">=</span> currentCapital;
+		}
+		<span class="pl-k">return</span> newName;
+	}
+}</pre>
+</div> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-smi">Gson</span> gson <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">GsonBuilder</span>()
+	.setPrettyPrinting()
+	.setFieldNamingStrategy(<span class="pl-k">new</span> <span class="pl-smi">ShortenNameLowerCaseDashesStrategy</span>())
+	.create();
+<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(gson<span class="pl-k">.</span>toJson(<span class="pl-smi">Engine</span><span class="pl-k">.</span>createModelEngine()));
+<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println();</pre>
+</div> 
+<p>The output will look like this:</p> 
+<div class="highlight highlight-source-json">
+ <pre>{
+  <span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>Mercedes-Benz<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>4MATIC G-TRONIC<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>displacement<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">2987.0</span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>compression-rate<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">15.5</span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>max-power-rpm<span class="pl-pds">&quot;</span></span>: [
+    <span class="pl-c1">192.4</span>,
+    <span class="pl-c1">3400.0</span>
+  ],
+  <span class="pl-s"><span class="pl-pds">&quot;</span>max-torque-rpm<span class="pl-pds">&quot;</span></span>: [
+    <span class="pl-c1">63.2</span>,
+    <span class="pl-c1">2400.0</span>
+  ]
+}</pre>
+</div> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h4> <a id="type-adapter" class="anchor" href="#type-adapter" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Type Adapter</h4> 
+<p>The <code>registerTypeAdapter()</code> can customize the conversion between JSON string and a type. You need to implement a <code>TypeAdapter</code> in order to cutomize the (de)serialization of a type.</p> 
+<p>This is an example of using TypeAdapter to implement the conversion between the class <code>Engine</code> and JSON string.</p> 
+<p>Implement a <code>TypeAdapter</code> for class <code>Engine</code>:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">EngineTypeAdapter</span> <span class="pl-k">extends</span> <span class="pl-e">TypeAdapter&lt;<span class="pl-smi">Engine</span>&gt;</span> {
+
+	<span class="pl-k">@Override</span>
+	<span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">write</span>(<span class="pl-smi">JsonWriter</span> <span class="pl-v">out</span>, <span class="pl-smi">Engine</span> <span class="pl-v">value</span>) <span class="pl-k">throws</span> <span class="pl-smi">IOException</span> {
+		<span class="pl-k">if</span> (value <span class="pl-k">==</span> <span class="pl-c1">null</span>) {
+			out<span class="pl-k">.</span>nullValue();
+		}
+		<span class="pl-k">else</span> {
+			out<span class="pl-k">.</span>beginArray();
+			out<span class="pl-k">.</span>value(value<span class="pl-k">.</span>getBrand());
+			out<span class="pl-k">.</span>value(value<span class="pl-k">.</span>getModel());
+			out<span class="pl-k">.</span>value(value<span class="pl-k">.</span>getDisplacement());
+			out<span class="pl-k">.</span>value(value<span class="pl-k">.</span>getCompressionRate());
+			out<span class="pl-k">.</span>beginArray();
+			out<span class="pl-k">.</span>value(value<span class="pl-k">.</span>getMaxPowerRPM()[<span class="pl-c1">0</span>]);
+			out<span class="pl-k">.</span>value(value<span class="pl-k">.</span>getMaxPowerRPM()[<span class="pl-c1">1</span>]);
+			out<span class="pl-k">.</span>endArray();
+			out<span class="pl-k">.</span>beginArray();
+			out<span class="pl-k">.</span>value(value<span class="pl-k">.</span>getMaxTorqueRPM()[<span class="pl-c1">0</span>]);
+			out<span class="pl-k">.</span>value(value<span class="pl-k">.</span>getMaxTorqueRPM()[<span class="pl-c1">1</span>]);
+			out<span class="pl-k">.</span>endArray();
+			out<span class="pl-k">.</span>endArray();
+		}
+	}
+
+	<span class="pl-k">@Override</span>
+	<span class="pl-k">public</span> <span class="pl-smi">Engine</span> <span class="pl-en">read</span>(<span class="pl-smi">JsonReader</span> <span class="pl-v">in</span>) <span class="pl-k">throws</span> <span class="pl-smi">IOException</span> {
+		<span class="pl-k">if</span> (in<span class="pl-k">.</span>peek()<span class="pl-k">.</span>equals(<span class="pl-smi">JsonToken</span><span class="pl-c1"><span class="pl-k">.</span>NULL</span>)) {
+			<span class="pl-k">return</span> <span class="pl-c1">null</span>;
+		}
+		<span class="pl-smi">Engine</span> engine <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Engine</span>();
+		in<span class="pl-k">.</span>beginArray();
+		engine<span class="pl-k">.</span>setBrand(in<span class="pl-k">.</span>nextString());
+		engine<span class="pl-k">.</span>setModel(in<span class="pl-k">.</span>nextString());
+		engine<span class="pl-k">.</span>setDisplacement(in<span class="pl-k">.</span>nextDouble());
+		engine<span class="pl-k">.</span>setCompressionRate(in<span class="pl-k">.</span>nextDouble());
+		in<span class="pl-k">.</span>beginArray();
+		<span class="pl-k">double</span> d[] <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">double</span>[<span class="pl-c1">2</span>];
+		d[<span class="pl-c1">0</span>] <span class="pl-k">=</span> in<span class="pl-k">.</span>nextDouble();
+		d[<span class="pl-c1">1</span>] <span class="pl-k">=</span> in<span class="pl-k">.</span>nextDouble();
+		engine<span class="pl-k">.</span>setMaxPowerRPM(d);
+		in<span class="pl-k">.</span>endArray();
+		in<span class="pl-k">.</span>beginArray();
+		d <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">double</span>[<span class="pl-c1">2</span>];
+		d[<span class="pl-c1">0</span>] <span class="pl-k">=</span> in<span class="pl-k">.</span>nextDouble();
+		d[<span class="pl-c1">1</span>] <span class="pl-k">=</span> in<span class="pl-k">.</span>nextDouble();
+		engine<span class="pl-k">.</span>setMaxTorqueRPM(d);
+		in<span class="pl-k">.</span>endArray();
+		in<span class="pl-k">.</span>endArray();
+		<span class="pl-k">return</span> engine;
+	}
+}</pre>
+</div> 
+<p>Register the <code>EngineTypeAdapter</code> using <code>registerTypeAdapter</code>:</p> 
+<pre><code>Gson gson = new GsonBuilder()
+		.registerTypeAdapter(Engine.class, new EngineTypeAdapter())
+		.setPrettyPrinting()
+		.create();
+</code></pre> 
+<p>Use the <code>Gson</code> instance to (de)serialize and <code>Car</code>:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-smi">String</span> car <span class="pl-k">=</span> gson<span class="pl-k">.</span>toJson(<span class="pl-smi">Car</span><span class="pl-c1"><span class="pl-k">.</span>MODEL_CAR</span>);
+<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(car);
+<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(gson<span class="pl-k">.</span>fromJson(car, <span class="pl-smi">Car</span><span class="pl-k">.</span>class));</pre>
+</div> 
+<p>The output will look like this:</p> 
+<div class="highlight highlight-source-json">
+ <pre>{
+  <span class="pl-s"><span class="pl-pds">&quot;</span>brand<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>Mercedes-Benz<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>model<span class="pl-pds">&quot;</span></span>: <span class="pl-s"><span class="pl-pds">&quot;</span>GLS 350d<span class="pl-pds">&quot;</span></span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>capacity<span class="pl-pds">&quot;</span></span>: <span class="pl-c1">7</span>,
+  <span class="pl-s"><span class="pl-pds">&quot;</span>engine<span class="pl-pds">&quot;</span></span>: [
+    <span class="pl-s"><span class="pl-pds">&quot;</span>Mercedes-Benz<span class="pl-pds">&quot;</span></span>,
+    <span class="pl-s"><span class="pl-pds">&quot;</span>4MATIC G-TRONIC<span class="pl-pds">&quot;</span></span>,
+    <span class="pl-c1">2987.0</span>,
+    <span class="pl-c1">15.5</span>,
+    [
+      <span class="pl-c1">192.4</span>,
+      <span class="pl-c1">3400.0</span>
+    ],
+    [
+      <span class="pl-c1">63.2</span>,
+      <span class="pl-c1">24000.0</span>
+    ]
+  ]
+}</pre>
+</div> 
+<pre><code>Car [brand=Mercedes-Benz, model=GLS 350d, capacity=7, engine=Engine
+	[brand=Mercedes-Benz, model=4MATIC G-TRONIC, displacement=2987.0,
+	compressionRate=15.5, maxPowerRPM=[192.4, 3400.0],
+	maxTorqueRPM=[63.2, 24000.0]]]
+</code></pre> 
+<p>The <code>write()</code> method of the <code>EngineTypeAdapter</code> serialize the <code>engine</code> into a nested JSON <code>List</code>, instead of the default serialize method into a JSON <code>Object</code> contains 2 JSON <code>List</code>.</p> 
+<p>The <code>read()</code> method of the <code>EngineTypeAdapter</code> deserialize the <code>engine</code> <code>List</code> and store its data into a new <code>Engine</code> instance, instead of returning a <code>Engine</code> with default properties.</p> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h2> <a id="alternative-libraries" class="anchor" href="#alternative-libraries" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Alternative Libraries</h2> 
+<p>There are more libraries provided in JSON.org, browse <a href="https://JSON.org" rel="nofollow">JSON.org</a> at the bottom to see the list of libraries.</p> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p> 
+<h2> <a id="reference" class="anchor" href="#reference" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reference</h2> 
+<ul> 
+ <li><a href="https://JSON.org" rel="nofollow">JSON.org</a></li> 
+ <li><a href="http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf" rel="nofollow">The JSON Standard ECMA-404</a></li> 
+ <li><a href="https://github.com/google/gson">GitHub: Gson</a></li> 
+ <li><a href="https://search.maven.org/artifact/com.google.code.gson/gson/2.8.6/jar" rel="nofollow">Maven: Gson</a></li> 
+ <li><a href="https://www.javadoc.io/doc/com.google.code.gson/gson/2.8.6/index.html" rel="nofollow">Javadoc: Gson</a></li> 
+ <li><a href="http://programdoubledragon.blogspot.com/2017/12/gson.html" rel="nofollow">Gson 基礎教學</a></li> 
+ <li><a href="http://tutorials.jenkov.com/java-json/index.html" rel="nofollow">Java JSON, tutorials.jenkov.com</a></li> 
+</ul> 
+<hr /> 
+<p><a href="#jsonjavascript-object-notation"></a></p>
+<ul type="none">
+ <li>
+  <div align="right">
+   <a href="#jsonjavascript-object-notation">[Back to top]</a>
+  </div></li>
+</ul>
+<p></p>
+</div>
+</body>
+</html>

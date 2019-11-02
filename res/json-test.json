@@ -1,0 +1,13 @@
+{
+	"booleanTest" : true,
+	"arrayTest" : [
+		"strgin0",
+		"string1",
+		"string2"
+	],
+	"numberTest" : 32767.0,
+	"StringTest" : "string",
+	"objectTest" : {
+		"objectContent" : "json test"
+	}
+}
