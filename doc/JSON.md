@@ -33,7 +33,7 @@ codes will be provided.
 - [Alternative Libraries](#alternative-libraries)
 - [Reference](#reference)
 ---
-[<ul id="page-breaker" type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul id="page-breaker" type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 ## About JSON
 JSON is a lightweight text format that facilitates structured data interchange
@@ -60,7 +60,7 @@ As most of the modern programming languages support the structures above, the
 JSON is interchangeable in programming languages that based on these structures.
 
 ---
-[<ul id="page-breaker" type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul id="page-breaker" type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 ### Data types
 JSON consists of the following data types:
@@ -81,7 +81,7 @@ separates the name from its value.
 - `null`: An empty value, using the word `null`
 > JSON is case sensitive with `true`, `false` or `null`.
 ---
-[<ul id="page-breaker" type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul id="page-breaker" type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 ### Syntax
 <details>
@@ -217,7 +217,7 @@ ws
 </details>
 
 ---
-[<ul id="page-breaker" type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul id="page-breaker" type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 ## Library: Gson
 There is a fast amount of libraries on the internet for JSON in Java. The Gson
@@ -256,7 +256,7 @@ to the Gson project.
 </details>
 
 ---
-[<ul id="page-breaker" type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul id="page-breaker" type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 #### Install as Jar files
 If you have downloaded the Gson library as Jar files, you need to add the
@@ -276,7 +276,7 @@ library into your build path reference.
 </details>
 
 ---
-[<ul id="page-breaker" type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul id="page-breaker" type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 ## Tutorial
 ### Test the installation
@@ -298,7 +298,7 @@ If you receive an error message: `Missing file: "res/json-test.json"`, you have
 not downloaded the full repository, or the path configuration is faulty.
 
 ---
-[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 ### Create a Gson Object
 There are 2 methods to create a Gson Object instance in the Gson library.
@@ -327,7 +327,7 @@ in a later chapter.
 For more details, browse the [Gson Javadoc][gson-javadoc] online.
 
 ---
-[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 ### Serialize JSON with toJson()
 Gson can generate JSON string from Java Objects with the method `toJson()` of a
@@ -484,7 +484,7 @@ JSON object with the properties of an `Engine`.
 is configured by `setPrettyPrinting`.
 
 ---
-[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 ### Deserialize JSON with fromJson()
 Gson can deserialize a JSON string to a Java Object with the method `fromJson()`
@@ -535,7 +535,7 @@ In the output object `myCar`, the properties loaded from `car.json` will
 replace the default properties of the class `Car`.
 
 ---
-[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 ### Fields Exclusion
 Some fields of an object may use in Java program exclusively, and you don't want
@@ -663,7 +663,7 @@ static field `MODEL_CAR` is output to the JSON string; engine is output to the
 JSON string.
 
 ---
-[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 ### Version Support
 The Gson library contains version support functionality. It can base on the
@@ -781,7 +781,7 @@ The `Gson` serialize all of the fields. Even if the fields are annotated with
 enable the version support exclusion functionality.
 
 ---
-[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 ### Custom Conversion
 The Gson library provides some customizations to paring and generating JSON
@@ -846,7 +846,7 @@ The output will look like this:
 ```
 
 ---
-[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 ##### Using Strategies to Configure Gson
 There are 2 types of strategies in Gson library, they are `ExclusionStrategy`
@@ -912,7 +912,7 @@ The output will look like this:
 ```
 
 ---
-[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 #### Type Adapter
 The `registerTypeAdapter()` can customize the conversion between JSON string and
@@ -1033,14 +1033,14 @@ The `read()` method of the `EngineTypeAdapter` deserialize the `engine`
 `Engine` with default properties.
 
 ---
-[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 ## Alternative Libraries
 There are more libraries provided in JSON.org, browse [JSON.org][json-org] at the
 bottom to see the list of libraries.
 
 ---
-[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
 
 ## Reference
 [json-org]:https://JSON.org
@@ -1058,4 +1058,4 @@ bottom to see the list of libraries.
 - [Gson 基礎教學][gson-basic]
 - [Java JSON, tutorials.jenkov.com][java-json-jenkov]
 ---
-[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notation)
+[<ul type="none"><li><div align="right">[Back to top]</div></li></ul>](#jsonjavascript-object-notationby-pgkan)
